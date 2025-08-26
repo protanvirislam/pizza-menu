@@ -191,7 +191,7 @@ function Modal(img, title, price, ingredient) {
 
   set_pizza = setPizza;
 
-
+ 
 
   return (
     <div className="modal">
