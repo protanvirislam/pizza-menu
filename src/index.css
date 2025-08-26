@@ -28,14 +28,15 @@ p {
 }
 
 .container {
-  margin-top: 40px;
+ margin-top: 40px;
   position: relative;
   display: flex;
   flex-direction: row;
  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   width: 600px;
-  margin: auto;
+  left: 50%;
   height: 800px;
+  transform: translate(-50%);
   
 }
 
@@ -322,6 +323,7 @@ td {
     width: 100vw;
     position: relative;
   }
+
   .column-1 {
     position: absolute;
     width: 100%;
@@ -368,6 +370,7 @@ td {
   
 
 }
+
 
 
 }

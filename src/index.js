@@ -64,7 +64,7 @@ function SideBanner() {
       <div
         style={{
           height: "800px",
-          backgroundImage: "url('../public/pizzas/banner.jpg')",
+          backgroundImage: `url(${process.env.PUBLIC_URL + '/pizzas/banner.jpg'})`,
           backgroundSize: "cover",
           backgroundPosition: "right",
         }}
