@@ -1,15 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-
-let set_pizza = null;
-let openItem = {
-  pizzaName: "Focaccia",
-  pizzaDesc: "Bread with italian olive oil and rosemary",
-  price: 6,
-  pizzaImage: "pizzas/focaccia.jpg",
-  isSoldOut: false,
-};
 
 const pizzaData = [
   {
@@ -56,205 +47,110 @@ const pizzaData = [
   },
 ];
 
-//sideBanner
-
-function SideBanner() {
-  return (
-    <div>
-      <div
-        style={{
-          height: "800px",
-          backgroundImage: `url(${process.env.PUBLIC_URL + '/pizzas/banner.jpg'})`,
-          backgroundSize: "cover",
-          backgroundPosition: "right",
-        }}
-        className="side-banner"
-      ></div>
-    </div>
-  );
-}
-
-//header title
-
-function HeaderTitle() {
-  return (
-    <div>
-      <div>
-        <h1 className="pizza-title">Menu</h1>
-      </div>
-      <div className="pizza-sub-title">PIZZA</div>
-    </div>
-  );
-}
-
-//Order Button
-
-function OrderNowBtn() {
-  return (
-    <div>
-      <div className="button-container">
-        <button className="order-now-btn">Order Online</button>
-      </div>
-    </div>
-  );
-}
-
-//Separator
-function Separator() {
-  return (
-    <div className="separator">
-      <div className="line">
-        <div className="circle"></div>
-      </div>
-    </div>
-  );
-}
-
-// Pizza Item
-function PizzaItem({ pizzaName, pizzaDesc, price, isSoldOut, pizzaImage }) {
-  if (isSoldOut) {
-    return (
-      <div>
-        <div className="list-item">
-          <div className="left-info">
-            <h2 className="pizza-name-soldout">{pizzaName}</h2>
-            <p className="pizza-desc-soldout">{pizzaDesc}</p>
-          </div>
-          <div className="right-info">
-            <span className="pizza-price-soldout">${price}</span>
-            <span className="tag-soldout">Sold Out</span>
-          </div>
-        </div>
-      </div>
-    );
-  } else {
-    return (
-      <div>
-        <div
-          onClick={() =>
-            openModal(pizzaName, pizzaDesc, price, isSoldOut, pizzaImage)
-          }
-          className="list-item"
-        >
-          <div className="left-info">
-            <h2 className="pizza-name">{pizzaName}</h2>
-            <p className="pizza-desc">{pizzaDesc}</p>
-          </div>
-          <div className="right-info">
-            <span className="pizza-price">${price}</span>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // return (
-  //   <div>
-  //     <div className="list-item">
-  //       <div className="left-info">
-  //         <h2 className="pizza-name">{pizzaName}</h2>
-  //         <p className="pizza-desc">
-  //           {pizzaDesc}
-  //         </p>
-  //       </div>
-  //       <div className="right-info">
-  //         <span className="pizza-price">${price}</span>
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
-}
-
-//Pizza Lists
-
-function PizzaList() {
-  return (
-    <ul>
-      {pizzaData.map((pizza) => (
-        <li key={pizza.name} className="list-of-pizza">
-          <PizzaItem
-            pizzaName={pizza.name}
-            pizzaDesc={pizza.ingredients}
-            price={pizza.price}
-            isSoldOut={pizza.soldOut}
-            pizzaImage={pizza.photoName}
-          />
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-//Modal of Pizza
-function Modal(img, title, price, ingredient) {
-  const [pizza, setPizza] = useState({});
-
-  set_pizza = setPizza;
-
- 
-
-  return (
-    <div className="modal">
-      <div className="popup-modal"></div>
-
-      <div className="modal-container">
-        <span className="close-modal">X</span>
-        <div className="modal-banner">
-          <img src={pizza.pizzaImage} alt={pizza.pizzaName} />
-          <h2 className="modal-pizza-name">{pizza.pizzaName}</h2>
-        </div>
-        <div className="modal-content">
-          <p className="modal-ing">
-            {" "}
-            <strong>Ingredients:</strong> {pizza.pizzaDesc}
-          </p>
-
-          <table>
-            <thead>
-              <tr>
-                <th>Size</th>
-                <th>Price</th>
-              </tr>
-            </thead>
-            
-            <tbody>
-            
-            <tr>
-              <td>X</td>
-              <td>$16</td>
-            </tr>
-
-            <tr>
-              <td>XL</td>
-              <td>$24</td>
-            </tr>
-            
-            </tbody>
-          </table>
-
-          <OrderNowBtn />
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function App() {
   return (
-    <div>
-      <Modal />
-      <div className="container">
-        <div className="column-1">
-          <SideBanner />
-        </div>
-        <div className="column-2">
-          <HeaderTitle />
-          <PizzaList />
-          <OrderNowBtn />
-        </div>
+    <div className="container">
+      <Header />
+      <Menu />
+      <Footer />
+    </div>
+  );
+}
 
-        <Separator />
+// Header
+function Header() {
+  return (
+    <header className="header">
+      <h1>Fast React Pizza Co.</h1>
+    </header>
+  );
+}
+
+//Menu
+//********  1. you can pass "string" in props without using {} curly braces Note: Look at </Pizza> component*********.
+
+function Menu() {
+  return (
+    <main className="menu">
+      <h2 className="">Our Menu</h2>
+      <PizzaList />
+    </main>
+  );
+}
+
+//Footer
+function Footer() {
+  const hour = new Date().getHours();
+  const openHour = 11;
+  const closeHour = 22;
+  const isOpen = hour >= openHour && hour <= closeHour;
+  console.log(isOpen);
+
+  return (
+    <footer className="footer">
+      {isOpen ? (
+        <Order closeHour={closeHour} />
+      ) : (
+        <p>
+          We're Happy to Wellcome You between {openHour}:00 to {closeHour}:00{" "}
+        </p>
+      )}
+    </footer>
+  );
+}
+
+//Pizza
+function Pizza(props) {
+  const soldoutStyle = props.soldOut
+    ? { filter: " grayscale(100%)", color: "gray" }
+    : {};
+
+  return (
+    <div className="pizza">
+      <img style={soldoutStyle} src={props.photo} alt={props.name} />
+      <div>
+        <h3 style={soldoutStyle}>{props.name}</h3>
+        <p style={soldoutStyle}>{props.ingredients}</p>
+        <span style={soldoutStyle}>${props.price}</span>
       </div>
+    </div>
+  );
+}
+
+//Pizza List
+function PizzaList() {
+  const allPizzas = pizzaData;
+  const countPizzas = allPizzas.length;
+  return (
+    <React.Fragment>
+      {countPizzas > 0 && (
+        <ul className="pizzas">
+          {pizzaData.map((pizza) => (
+            <li key={pizza.name}>
+              <Pizza
+                name={pizza.name}
+                photo={pizza.photoName}
+                price={pizza.price}
+                ingredients={pizza.ingredients}
+                soldOut={pizza.soldOut}
+              />
+            </li>
+          ))}
+        </ul>
+      )}
+    </React.Fragment>
+  );
+}
+
+//Order
+function Order(props) {
+  return (
+    <div className="order">
+      <p>
+        We are open until {props.closeHour}:00. Come and visit us or Order
+        Online
+      </p>
+      <button className="btn order">Order Online</button>
     </div>
   );
 }
@@ -266,25 +162,3 @@ root.render(
     <App />
   </React.StrictMode>
 );
-
-//helper function
-
-function openModal(pizzaName, pizzaDesc, price, isSoldOut, pizzaImage) {
-  document.querySelector(".modal").classList.add("open"); //limited no more execution logic
-  openItem = {
-    pizzaName,
-    pizzaDesc,
-    price,
-    isSoldOut,
-    pizzaImage,
-  };
-
-  set_pizza(openItem);
-
-  const getModal = document.querySelector(".modal");
-  getModal.addEventListener("click", closeModal);
-}
-
-function closeModal(e) {
-  document.querySelector(".modal").classList.remove("open");
-}
